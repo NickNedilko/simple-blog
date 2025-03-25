@@ -20,21 +20,21 @@ export const Header = () => {
           <div className='ml-3'>
             {isAuth ? (
               <div className="flex items-center gap-4">
-                <a href="/posts/create">
+                <Link to="/add-post">
                   <Button variant="contained">Написать статью</Button>
-                </a>
+                </Link>
                 <Button onClick={onClickLogout} variant="contained" color="error">
                   Выйти
                 </Button>
               </div>
             ) : (
               <div className='flex items-center gap-4'>
-                <a href="/login">
+                <Link to="/login">
                   <Button variant="outlined">Войти</Button>
-                </a>
-                <a href="/register">
+                </Link>
+                <Link to="/register">
                   <Button variant="contained">Создать аккаунт</Button>
-                </a>
+                </Link>
               </div>
             )}
           </div>
