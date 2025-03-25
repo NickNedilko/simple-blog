@@ -1,4 +1,3 @@
-
 import clsx from "clsx";
 import { FC } from "react";
 import { MdClear } from "react-icons/md";
