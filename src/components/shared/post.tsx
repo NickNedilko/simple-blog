@@ -3,7 +3,7 @@ import { MdOutlineDelete,  MdEdit, MdComment, MdRemoveRedEye  } from "react-icon
 import { FC } from 'react';
 import { UserInfo } from './user-info';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 interface PostProps {
   _id: string;
@@ -68,7 +68,7 @@ export const Post:FC<PostProps> = ({
         <UserInfo {...user} additionalText={createdAt} />
         <div className='pl-10'>
           <h2 className={`text-2xl ${isFullPost ? 'text-4xl font-extrabold' : ''} mb-2`}>
-            {isFullPost ? title : <a href={`/posts/${_id}`}>{title}</a>}
+            {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
           </h2>
           <ul className="flex flex-wrap gap-3 mb-2">
             {tags.map((name) => (
