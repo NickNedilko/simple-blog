@@ -1,8 +1,9 @@
-
 import IconButton from '@mui/material/IconButton';
 import { MdOutlineDelete,  MdEdit, MdComment, MdRemoveRedEye  } from "react-icons/md";
 import { FC } from 'react';
 import { UserInfo } from './user-info';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
 interface PostProps {
   _id: string;
@@ -42,27 +43,26 @@ export const Post:FC<PostProps> = ({
   }
 
   const onClickRemove = () => {};
-
   return (
    <div className={`bg-white border border-[#dedede] rounded-lg overflow-hidden mb-4 relative ${isFullPost ? 'hover:border-[#4361ee] hover:shadow-md' : ''}`}>
       {isEditable && (
         <div className="absolute right-4 top-4 bg-white rounded-xl opacity-0 transition-opacity duration-150 ease-in-out hover:opacity-100">
-          <a href={`/posts/${_id}/edit`}>
+          <Link to={`/posts/${_id}/edit`}>
             <IconButton color="primary" > 
               <MdEdit />
             </IconButton>
-          </a>
+          </Link>
           <IconButton onClick={onClickRemove} color="secondary">
             <MdOutlineDelete />
           </IconButton>
         </div>
       )}
       {imageUrl && (
-        <img
-          className={`w-full h-[300px] object-cover ${isFullPost ? 'h-auto min-h-[300px]' : ''}`}
-          src={imageUrl}
-          alt={title}
-        />
+       <img
+  className={clsx('w-full h-[300px] object-cover', { 'h-auto max-h-[600px] object-cover': isFullPost })}
+  src={imageUrl}
+  alt={title}
+/>
       )}
       <div className="p-5">
         <UserInfo {...user} additionalText={createdAt} />
