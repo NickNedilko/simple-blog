@@ -1,5 +1,5 @@
 import { FC } from "react";
-import noAvatar from '../../assets/noavatar.png'
+import noAvatar from '../../assets/noAvatar.png'
 
 interface UserInfoProps {
     avatarUrl: string;
