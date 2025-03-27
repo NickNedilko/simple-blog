@@ -5,16 +5,14 @@ import { TagsBlock } from '../components/shared/tags-block';
 import { useQuery } from '@tanstack/react-query';
 import { getPosts, getTags } from '../services/postsApi';
 import { formateDate } from '../lib/formate-data';
+import { PostSkeleton } from '../components/shared/post-skeleton';
+import { TagsSkeleton } from '../components/shared/tags-skeleton';
 
 
 export const Home = () => {
 
   const { data: posts , isLoading: isLoadingPosts } = useQuery({ queryKey: ['posts'], queryFn: getPosts });
   const { data: tags, isLoading: isLoadingTags } = useQuery({ queryKey: ['tags'], queryFn: getTags })
-
-if(!tags || !posts) {
-    return <h1>Loading...</h1>
-  }
 
   return (
     <>
@@ -23,13 +21,15 @@ if(!tags || !posts) {
         <Tab label="Популярные" />
       </Tabs>
 
-      <div className="flex flex-wrap">
-        {/* Левая колонка */}
+      {
+        !posts ? <PostSkeleton /> : (
+          <div className="flex flex-wrap">
+       
         <div className="w-full md:w-2/3">
           {posts?.map((post) => {
             return (
             <Post
-              key={post._id} // Для предотвращения ошибок в React при рендере
+              key={post._id} 
               _id={post._id}
               title={post.title}
               imageUrl={post.imageUrl}
@@ -41,11 +41,10 @@ if(!tags || !posts) {
               isEditable
             />
           )})}
-        </div>
-
-        {/* Правая колонка */}
+            </div>
+            
         <div className="w-full md:w-1/3">
-          <TagsBlock items={tags} isLoading={isLoadingTags} />
+          <TagsBlock items={tags} isLoading={!isLoadingTags} />
           <CommentsBlock
             items={[
               {
@@ -67,6 +66,8 @@ if(!tags || !posts) {
           />
         </div>
       </div>
+        )
+      }
     </>
   );
 };
