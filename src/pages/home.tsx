@@ -6,13 +6,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getPosts, getTags } from '../services/postsApi';
 import { formateDate } from '../lib/formate-data';
 import { PostSkeleton } from '../components/shared/post-skeleton';
-import { TagsSkeleton } from '../components/shared/tags-skeleton';
+
 
 
 export const Home = () => {
 
   const { data: posts , isLoading: isLoadingPosts } = useQuery({ queryKey: ['posts'], queryFn: getPosts });
   const { data: tags, isLoading: isLoadingTags } = useQuery({ queryKey: ['tags'], queryFn: getTags })
+
+
 
   return (
     <>
@@ -44,7 +46,7 @@ export const Home = () => {
             </div>
             
         <div className="w-full md:w-1/3">
-          <TagsBlock items={tags} isLoading={!isLoadingTags} />
+          {!tags? <></>  :<TagsBlock items={tags} isLoading={isLoadingTags} />}
           <CommentsBlock
             items={[
               {
