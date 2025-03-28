@@ -9,7 +9,9 @@ import { RestrictedRoute } from './lib/redirect-routes';
 import SharedLayout from './components/shared/shared-layout';
 
 
+
 function App() {
+      
   return (
         <Routes>
         <Route path='/' element={<SharedLayout />}>

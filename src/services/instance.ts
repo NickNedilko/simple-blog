@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
 export const buildUrl = (...paths: string[]) =>
-    `https://simple-blog-backend-rriy.onrender.com/api/${paths.join('/')}`;
+    `http://localhost:4444/api/${paths.join('/')}`;
 
 export const sendRequest = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
   try {

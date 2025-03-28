@@ -16,7 +16,7 @@ export const RestrictedRoute: FC<RouteProps> = ({ component , redirectTo = '/' }
 
 export const PrivateRoute: FC<RouteProps> = ({ component, redirectTo = '/' }) =>{
    const { isLoggedIn } = useAuthStore();
-  const isFetching = useSelector(selectIsRefreshing);
+  const isFetching = false;
 
   return !isLoggedIn && !isFetching ? <Navigate to={redirectTo} /> : component;
 }

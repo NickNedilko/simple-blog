@@ -3,11 +3,28 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom';
+import { useAuthStore } from '../../store/authStore';
+import { useMutation } from '@tanstack/react-query';
+import { logout } from '../../services/authApi';
+import { clearAuthHeader } from '../../lib/jwt';
 
 export const Header = () => {
-  const isAuth = false;
+  
+  const { isLoggedIn } = useAuthStore();
 
-  const onClickLogout = () => {};
+console.log(isLoggedIn)
+
+  const {mutate} = useMutation({
+  mutationFn: logout,
+    onSuccess: async () => {
+      useAuthStore.getState().logout();
+      clearAuthHeader()
+  }
+})
+
+  const onClickLogout = () => {
+    mutate();
+  };
 
   return (
     <div className='bg-white mb-8 border-b border-gray-300 py-3'>
@@ -18,7 +35,7 @@ export const Header = () => {
           <h1 className="text-2xl font-bold">My Blog</h1>
         </div>
           <div className='ml-3'>
-            {isAuth ? (
+            {isLoggedIn ? (
               <div className="flex items-center gap-4">
                 <Link to="/add-post">
                   <Button variant="contained">Написать статью</Button>

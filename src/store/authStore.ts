@@ -1,25 +1,33 @@
 import { create } from 'zustand'
+import { User } from '../types';
 
-interface User {
-        id: string;
-        fullName: string;
-        email: string
-   
-}
 
-interface AuthState {
-    user: User | null,
+
+export interface AuthState {
+    user: Partial<User> | null,
     token: string | null;
-    setUser: (user:User)=> void;
+    isLoggedIn: boolean,
+    setUser: (user:Partial<User>)=> void;
     setToken: (token: string) => void;
+    setLoggedIn: () => void;
+    login: (token: string) => void;
     logout: () => void;
 }
-
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: null,
-  setUser: (user:User) => set({ user }),
+  isLoggedIn: false,
+  isRefreshing: false, 
+  setUser: (user: Partial<User>) => set({ user }),
   setToken: (token: string) => set({ token }),
-  logout: () => set({ user: null, token: null }),
+  setLoggedIn: () => set({ isLoggedIn: true }),
+  login: (token: string) => {
+    localStorage.setItem('authToken', token);
+    set({ isLoggedIn: true })
+  },
+  logout: () => {
+    set({ user: null, token: null, isLoggedIn: false });
+    localStorage.removeItem('authToken'); 
+  },
 }));

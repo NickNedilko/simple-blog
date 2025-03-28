@@ -9,6 +9,7 @@ import { PostSkeleton } from '../components/shared/post-skeleton';
 
 
 
+
 export const Home = () => {
 
   const { data: posts , isLoading: isLoadingPosts } = useQuery({ queryKey: ['posts'], queryFn: getPosts });
@@ -22,7 +23,6 @@ export const Home = () => {
         <Tab label="Новые" />
         <Tab label="Популярные" />
       </Tabs>
-
       {
         !posts ? <PostSkeleton /> : (
           <div className="flex flex-wrap">

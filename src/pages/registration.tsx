@@ -4,22 +4,38 @@ import { FormInput } from "../components/shared/form-input";
 import { Title } from '../components/shared/title';
 
 import phoneImg from '../assets/phone-icon.png'
+import { useMutation } from '@tanstack/react-query';
+import { register } from '../services/authApi';
+import { useAuthStore } from '../store/authStore';
+import { setAuthHeader } from '../lib/jwt';
 
 
 
 export const Registration = () => {
 
+  const {mutate} = useMutation({
+    mutationFn: register,
+      onSuccess: async (data) => {
+  console.log(data)
+      const { token, ...user } = data;
+        useAuthStore.getState().setToken(token as string);
+        useAuthStore.getState().setUser(user);
+        useAuthStore.getState().login(token as string);
+        setAuthHeader(token as string);
+        
+    }
+  })
     
 const form = useForm({
         mode: 'onChange',
-    defaultValues: {
-            FullName: '',
-            email: '',
-            password: ''    
+        defaultValues: {
+        fullName: '',
+        email: '',
+        password: ''    
         }
 });
     
-    const onSubmit = ()=> console.log(form.getValues())
+    const onSubmit = ()=> mutate(form.getValues())
     
     return (
       <FormProvider {...form}>
@@ -28,8 +44,8 @@ const form = useForm({
                 <Title text='Создание аккаунта' size='md' className='font-bold' />
             <img src={phoneImg} alt="phone-icon"width={60} height={60} />
             </div>
-            <FormInput name='FullName' label='FullName' placeholder='FullName' type='text' required />
-            <FormInput name='email' label='E-mail' placeholder='E-mail' required />
+            <FormInput name='fullName' label='FullName' placeholder='FullName' type='text' required />
+            <FormInput name='email' label='Email' placeholder='Email' required />
             <FormInput name='password' label='Password' placeholder='Password' type='password' required />
                 <Button type='submit' size="large" variant="contained" fullWidth>
         Зарегистрироваться
