@@ -1,30 +1,26 @@
 
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { Header } from './components/shared/header';
 import { Home } from './pages/home';
-import { Container } from '@mui/material';
 import { Login } from './pages/login';
 import { Registration } from './pages/registration';
 import { FullPost } from './pages/full-post';
+import { RestrictedRoute } from './lib/redirect-routes';
+import SharedLayout from './components/shared/shared-layout';
 
 
 function App() {
-
   return (
-    <>
-      <Header/>
-      <Container maxWidth="lg">
-          <Routes>
+        <Routes>
+        <Route path='/' element={<SharedLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Registration/>}/>
+        <Route path="/login" element={<RestrictedRoute component={<Login />} redirectTo='/'/>}/>
+        <Route path="/register" element={<RestrictedRoute component={<Registration />} redirectTo='/'/>}/>
         <Route path="/posts/:id" element={<FullPost/>}/>
-        {/* <Route path="/add-post" element={<AddPost/>}/> */}
+          {/* <Route path="/add-post" element={<AddPost/>}/> */}
+        </Route>
       </Routes>
-      </Container>
-  
-    </>
+
     
   )
 }
