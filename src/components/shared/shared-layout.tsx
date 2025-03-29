@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
-
 import { Suspense } from "react";
 import { ToastContainer } from 'react-toastify';
 import { Container } from "@mui/material";
@@ -31,7 +30,10 @@ const SharedLayout = () => {
               <Suspense fallback={<Loader />}>
                 <Outlet /> 
               </Suspense>
-              <ToastContainer /> 
+        <ToastContainer
+         position="top-center"
+         autoClose={2000}
+                   /> 
             </Container>
           </main>
           {/* <Footer /> */}

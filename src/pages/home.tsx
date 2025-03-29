@@ -6,12 +6,13 @@ import { useQuery } from '@tanstack/react-query';
 import { getPosts, getTags } from '../services/postsApi';
 import { formateDate } from '../lib/formate-data';
 import { PostSkeleton } from '../components/shared/post-skeleton';
+import { useAuthStore } from '../store/authStore';
 
 
 
 
 export const Home = () => {
-
+  const { user } = useAuthStore();
   const { data: posts , isLoading: isLoadingPosts } = useQuery({ queryKey: ['posts'], queryFn: getPosts });
   const { data: tags, isLoading: isLoadingTags } = useQuery({ queryKey: ['tags'], queryFn: getTags })
 
@@ -40,7 +41,7 @@ export const Home = () => {
               viewsCount={post.viewsCount}
               commentsCount={3}
               tags={post.tags}
-              isEditable
+              isEditable={post.user?._id === user?._id} 
             />
           )})}
             </div>

@@ -40,7 +40,7 @@ export const FormInput: FC<Props> = ({name, label, required, className, ...props
                 <Input className="h-12 text-md" {...register(name)} {...props} />
                { value && <ClearButton onClick={onClickClear}/>}
             </div>
-            { errorText && <ErrorText text={errorText} className="mt-2"/>}
+            { errorText && value && <ErrorText text={errorText} className="mt-2"/>}
         </div>
     )
 }

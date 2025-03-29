@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Button from "@mui/material/Button";
 import { FormInput } from "../components/shared/form-input";
 import { Title } from '../components/shared/title';
@@ -7,6 +8,8 @@ import { useMutation } from '@tanstack/react-query';
 import { login } from '../services/authApi';
 import { useAuthStore } from '../store/authStore';
 import { setAuthHeader } from '../lib/jwt';
+import { loginSchema } from '../validation';
+import { toast } from 'react-toastify';
 
 
 export const Login = () => {
@@ -14,7 +17,9 @@ export const Login = () => {
   const {mutate} = useMutation({
   mutationFn: login,
     onSuccess: async (data) => {
-
+      if (data) {
+     toast.success("Вы успешно вошли в аккаунт");
+}
     const { token, ...user } = data;
       useAuthStore.getState().setToken(token as string);
       useAuthStore.getState().setUser(user);
@@ -25,7 +30,8 @@ export const Login = () => {
 })
 
 const form = useForm({
-        mode: 'onChange',
+  mode: 'onChange',
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: '',
             password: ''    

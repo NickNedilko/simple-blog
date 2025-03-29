@@ -1,16 +1,8 @@
 import { setAuthHeader } from "../lib/jwt";
 import { User } from "../types";
+import { LoginUser, RegisterUser } from "../validation";
 import { buildUrl, sendRequest } from "./instance";
 
-interface LoginUser {
-    email: string;
-    password: string 
-}
-
-interface RegisterUser extends LoginUser {
-    fullName: string;
-
-}
 
 export const login = async (data: LoginUser ) => {
 return sendRequest<Partial<User>>(buildUrl('auth', 'login'), {

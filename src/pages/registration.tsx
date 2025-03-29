@@ -8,6 +8,8 @@ import { useMutation } from '@tanstack/react-query';
 import { register } from '../services/authApi';
 import { useAuthStore } from '../store/authStore';
 import { setAuthHeader } from '../lib/jwt';
+import { registerSchema } from '../validation';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 
 
@@ -28,6 +30,7 @@ export const Registration = () => {
     
 const form = useForm({
         mode: 'onChange',
+        resolver: zodResolver(registerSchema),
         defaultValues: {
         fullName: '',
         email: '',
